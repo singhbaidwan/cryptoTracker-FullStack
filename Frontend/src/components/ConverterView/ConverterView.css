@@ -1,0 +1,12 @@
+.main-converter-view {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.converter-view-result {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
