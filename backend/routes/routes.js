@@ -33,6 +33,7 @@ router.get("/getTop100", (req, res) => {
       } else {
         res.statusCode = 500;
       }
+      console.log(error);
       res.send(
         JSON.stringify({
           errorMessage:
