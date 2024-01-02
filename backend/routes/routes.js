@@ -10,16 +10,21 @@ router.get("/getTop100", (req, res) => {
   fetch(
     `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&order=market_cap_desc&per_page=100&page=1&sparkline=false&locale=en`
   )
-    .then((data) => data.json())
-    .then((data) => {
-      if (data?.status?.error_code) {
-        res.statusCode = data.status.error;
-        res.send(JSON.stringify(data));
-      } else {
-        res.statusCode = 200;
-        res.setHeader("Content-Type", "application/json");
-        res.send(JSON.stringify(data));
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
       }
+      throw new Error(response);
+    })
+    .then((data) => {
+      // if (data?.status?.error_code) {
+      // res.statusCode = data.status.error;
+      // res.send(JSON.stringify(data));
+      // } else {
+      res.statusCode = 200;
+      res.setHeader("Content-Type", "application/json");
+      res.send(JSON.stringify(data));
+      // }
     })
     .catch((error) => {
       res.setHeader("Content-Type", "application/json");
