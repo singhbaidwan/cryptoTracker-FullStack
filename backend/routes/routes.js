@@ -35,7 +35,8 @@ router.get("/getTop100", (req, res) => {
       }
       res.send(
         JSON.stringify({
-          errorMessage: "Rate limit Reached. Please try again after 5 minutes",
+          errorMessage:
+            "Rate limit Reached. Please try again after 5 minutes" + error,
         })
       );
     });
