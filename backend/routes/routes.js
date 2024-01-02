@@ -12,9 +12,15 @@ router.get("/getTop100", (req, res) => {
   )
     .then((data) => data.json())
     .then((data) => {
-      res.statusCode = 200;
-      res.setHeader("Content-Type", "application/json");
-      res.send(JSON.stringify(data));
+      console.log(data);
+      if (data.status.error_code) {
+        res.statusCode = data.status.error;
+        res.send(JSON.stringify(data));
+      } else {
+        res.statusCode = 200;
+        res.setHeader("Content-Type", "application/json");
+        res.send(JSON.stringify(data));
+      }
     })
     .catch((error) => {
       res.setHeader("Content-Type", "application/json");
@@ -42,14 +48,19 @@ router.get("/convertPrice", (req, res) => {
     )
       .then((data) => data.json())
       .then((data) => {
-        res.statusCode = 200;
-        res.setHeader("Content-Type", "application/json");
-        let calculatedData = {
-          id: id,
-          currency: currency,
-          amount: data[id][currency] * amount,
-        };
-        res.send(JSON.stringify(calculatedData));
+        if (data.status.error_code) {
+          res.statusCode = data.status.error;
+          res.send(JSON.stringify(data));
+        } else {
+          res.statusCode = 200;
+          res.setHeader("Content-Type", "application/json");
+          let calculatedData = {
+            id: id,
+            currency: currency,
+            amount: data[id][currency] * amount,
+          };
+          res.send(JSON.stringify(calculatedData));
+        }
       })
       .catch((error) => {
         res.setHeader("Content-Type", "application/json");
@@ -81,9 +92,14 @@ router.get("/search", (req, res) => {
     fetch(`https://api.coingecko.com/api/v3/search?query=${req.query.query}`)
       .then((data) => data.json())
       .then((data) => {
-        res.statusCode = 200;
-        res.setHeader("Content-Type", "application/json");
-        res.send(JSON.stringify(data));
+        if (data.status.error_code) {
+          res.statusCode = data.status.error;
+          res.send(JSON.stringify(data));
+        } else {
+          res.statusCode = 200;
+          res.setHeader("Content-Type", "application/json");
+          res.send(JSON.stringify(data));
+        }
       })
       .catch((error) => {
         res.setHeader("Content-Type", "application/json");
