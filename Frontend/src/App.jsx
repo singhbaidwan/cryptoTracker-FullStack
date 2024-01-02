@@ -9,10 +9,9 @@ function App() {
   const [coinData, setcoinData] = useState({});
   return (
     <CryptoContext>
-      <div>
+      <div className="app">
         <Header />
         <Banner />
-        <ConverterView />
         <CoinsTable />
       </div>
     </CryptoContext>

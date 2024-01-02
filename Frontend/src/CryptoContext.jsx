@@ -8,10 +8,10 @@ const CryptoContext = ({ children }) => {
 
   useEffect(() => {
     let value = currencyData.find((data) => {
-      console.log(data);
+      // console.log(data);
       return data.code == currency;
     });
-    console.log(value);
+    // console.log(value);
     setSymbol(value.symbol);
   }, [currency]);
 

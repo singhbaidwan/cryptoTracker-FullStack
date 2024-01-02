@@ -11,10 +11,7 @@ import { CryptoState } from "../CryptoContext";
 import { currencyData } from "../constants/CurrencyData";
 const darkTheme = createTheme({
   palette: {
-    primary: {
-      main: "#fff",
-    },
-    type: "dark",
+    mode: "dark",
   },
 });
 
@@ -27,7 +24,7 @@ function Header() {
         <Container>
           <Toolbar>
             <Typography
-              onClick={() => history.push(`/`)}
+              onClick={() => {}}
               variant="h6"
               sx={{
                 flex: 1,

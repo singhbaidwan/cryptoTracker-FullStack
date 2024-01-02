@@ -18,7 +18,7 @@ import {
 import axios from "axios";
 import { CoinList } from "../config/api";
 import { CryptoState } from "../CryptoContext";
-
+import ConverterView from "./ConverterView/ConverterView";
 export function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
@@ -49,17 +49,13 @@ export default function CoinsTable() {
 
   const darkTheme = createTheme({
     palette: {
-      primary: {
-        main: "#fff",
-      },
-      type: "dark",
+      mode: "dark",
     },
   });
 
   const fetchCoins = async () => {
     setLoading(true);
     const { data } = await axios.get(CoinList(currency));
-    console.log(data);
 
     setCoins(data);
     setLoading(false);
@@ -80,6 +76,7 @@ export default function CoinsTable() {
 
   return (
     <ThemeProvider theme={darkTheme}>
+      <ConverterView coins={coins} />
       <Container style={{ textAlign: "center" }}>
         <Typography
           variant="h4"
@@ -124,7 +121,7 @@ export default function CoinsTable() {
                     return (
                       <TableRow
                         onClick={() => {}}
-                        className={{
+                        sx={{
                           backgroundColor: "#16171a",
                           cursor: "pointer",
                           "&:hover": {
@@ -155,13 +152,12 @@ export default function CoinsTable() {
                               style={{
                                 textTransform: "uppercase",
                                 fontSize: 22,
+                                color: "white",
                               }}
                             >
                               {row.symbol}
                             </span>
-                            <span style={{ color: "darkgrey" }}>
-                              {row.name}
-                            </span>
+                            <span style={{ color: "white" }}>{row.name}</span>
                           </div>
                         </TableCell>
                         <TableCell align="right">
@@ -192,8 +188,6 @@ export default function CoinsTable() {
             </Table>
           )}
         </TableContainer>
-
-        {/* Comes from @material-ui/lab */}
         <Pagination
           count={(handleSearch()?.length / 10).toFixed(0)}
           style={{
@@ -203,10 +197,8 @@ export default function CoinsTable() {
             justifyContent: "center",
           }}
           sx={{
-            ul: {
-              "& .MuiPaginationItem-root": {
-                color: "gold",
-              },
+            "& .MuiPaginationItem-root": {
+              color: "gold",
             },
           }}
           onChange={(_, value) => {

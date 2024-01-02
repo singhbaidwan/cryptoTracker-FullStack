@@ -1,7 +1,14 @@
+.container-view {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
 .main-converter-view {
   display: flex;
   flex-direction: row;
+  margin-top: 25px;
   justify-content: space-around;
+  align-items: center;
 }
 
 .converter-view-result {
