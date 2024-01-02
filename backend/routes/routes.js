@@ -33,11 +33,12 @@ router.get("/getTop100", (req, res) => {
       } else {
         res.statusCode = 500;
       }
-      console.log(error);
+      console.log(error.message);
       res.send(
         JSON.stringify({
           errorMessage:
-            "Rate limit Reached. Please try again after 5 minutes" + error,
+            "Rate limit Reached. Please try again after 5 minutes" +
+            error.message,
         })
       );
     });
