@@ -12,8 +12,7 @@ router.get("/getTop100", (req, res) => {
   )
     .then((data) => data.json())
     .then((data) => {
-      console.log(data);
-      if (data.status.error_code) {
+      if (data?.status?.error_code) {
         res.statusCode = data.status.error;
         res.send(JSON.stringify(data));
       } else {
@@ -48,7 +47,7 @@ router.get("/convertPrice", (req, res) => {
     )
       .then((data) => data.json())
       .then((data) => {
-        if (data.status.error_code) {
+        if (data?.status?.error_code) {
           res.statusCode = data.status.error;
           res.send(JSON.stringify(data));
         } else {
@@ -92,7 +91,7 @@ router.get("/search", (req, res) => {
     fetch(`https://api.coingecko.com/api/v3/search?query=${req.query.query}`)
       .then((data) => data.json())
       .then((data) => {
-        if (data.status.error_code) {
+        if (data?.status?.error_code) {
           res.statusCode = data.status.error;
           res.send(JSON.stringify(data));
         } else {

@@ -1,5 +1,5 @@
 export const CoinList = (currency = "inr") =>
-  `https://cryptotracker-nrm8.onrender.com/api/getTop100?currency=${currency}`;
+  `http://localhost:3000/api/getTop100?currency=${currency}`;
 
 export const ConvertPrice = (id, currency, amount = 0) =>
-  `https://cryptotracker-nrm8.onrender.com?id=${id}&currency=${currency}&amount=${amount}`;
+  `http://localhost:3000/api/convertPrice?id=${id}&currency=${currency.toLowerCase()}&amount=${amount}`;

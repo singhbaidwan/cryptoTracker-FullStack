@@ -13,12 +13,13 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
 import "./ConverterView.css";
+import axios from "axios";
+import { ConvertPrice } from "../../config/api";
 const ConverterView = (props) => {
   const [currency, setCurrency] = useState("");
   const [amount, setamount] = useState(0);
   const [cryptoCoin, setcryptoCoin] = useState("");
   const [result, setResult] = useState(0);
-
   const darkTheme = createTheme({
     palette: {
       mode: "dark",
@@ -31,20 +32,17 @@ const ConverterView = (props) => {
   const numberWithCommas = (x) => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
+  const fetchAmount = async () => {
+    const { data } = await axios.get(
+      ConvertPrice(cryptoCoin, currency, amount)
+    );
+    let valueOfCoin = numberWithCommas(`${data?.amount.toFixed(2) ?? 0}`);
+    setResult(`${currencySymbol} ${valueOfCoin}`);
+  };
   const convertButtonClicked = (e) => {
     e.preventDefault();
-    console.log(currency);
-    console.log(cryptoCoin);
-    console.log(amount);
     if (currency != "" && cryptoCoin != "") {
-      let valueOfCoin =
-        props.coins
-          .find((data) => data.symbol == cryptoCoin)
-          ?.current_price.toFixed(2) ?? 0;
-
-      valueOfCoin = numberWithCommas(`${valueOfCoin * amount}`);
-      console.log(valueOfCoin);
-      setResult(valueOfCoin);
+      fetchAmount();
     }
   };
   return (
@@ -65,7 +63,7 @@ const ConverterView = (props) => {
           <Autocomplete
             disablePortal
             id="combo-box-select-coin"
-            options={props.coins.map((data) => data.symbol)}
+            options={props.coins.map((data) => data.id)}
             sx={{ width: 300 }}
             onChange={(e) => {
               setcryptoCoin(e.target.innerHTML);
@@ -126,7 +124,7 @@ const ConverterView = (props) => {
               color: "#fff",
             }}
           >
-            {`${currencySymbol} ${result}`}
+            {`${result}`}
           </Typography>
         </div>
       </div>
